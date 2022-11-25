@@ -89,7 +89,7 @@ ssize_t sig_read_interface(struct file * file, char __user * buff, size_t count,
 		const char fields_values_str[MAX_DEBUGFS_SIZE];
 		const char format_answer[] = "Nr threads: %u\nNotify count: %u\nGroup stop count: %u\nThread head: %x\nLive: %u\n";
 		size_t string_size = snprintf(NULL, 0, format_answer, sig->nr_threads, sig->notify_count, sig->group_stop_count, &(sig->thread_head), sig->live.counter) + 1;
-		snprintf(fields_values_str, string_size, format_answer, sig->nr_threads. sig->notify_count, sig->group_stop_count, &(sig->thread_head), sig->live.counter);
+		snprintf(fields_values_str, string_size, format_answer, sig->nr_threads, sig->notify_count, sig->group_stop_count, &(sig->thread_head), sig->live.counter);
 		copy_to_user(buff, fields_values_str, string_size);
 		read_status = string_size;
 	}
