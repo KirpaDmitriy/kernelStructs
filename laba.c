@@ -39,13 +39,12 @@ ssize_t ct_read_interface(struct file * file, char __user * buff, size_t count, 
 		}
 	}
 	if(found_flag == 1) {
-		struct cpu_timer = task->cpu_timers[0];
 		struct timerqueue_node tqn = task->signal->real_timer.node;
 		struct timerqueue_head tqh = task->posix_cputimers.bases[0].tqhead;
 		const char fields_values_str[MAX_DEBUGFS_SIZE];
-		const char format_answer[] = "Timerqueue node expires: %u\nTimer PID: %u\n";
-		size_t string_size = snprintf(NULL, 0, format_answer, tqn.expires, seeked_pid) + 1;
-		snprintf(fields_values_str, string_size, format_answer, tqn.expires, seeked_pid);
+		const char format_answer[] = "Timerqueue node expires: %u\nTimer PID: %u\nTimerqueue head pointer: %x\n";
+		size_t string_size = snprintf(NULL, 0, format_answer, tqn.expires, seeked_pid, &tqh) + 1;
+		snprintf(fields_values_str, string_size, format_answer, tqn.expires, seeked_pid, &tqh);
 		copy_to_user(buff, fields_values_str, string_size);
 		read_status = string_size;
 	}
@@ -88,9 +87,9 @@ ssize_t sig_read_interface(struct file * file, char __user * buff, size_t count,
 	if(found_flag == 1) {
 		struct signal_struct * sig = task->signal;
 		const char fields_values_str[MAX_DEBUGFS_SIZE];
-		const char format_answer[] = "Nr threads: %u\n";
-		size_t string_size = snprintf(NULL, 0, format_answer, sig->nr_threads) + 1;
-		snprintf(fields_values_str, string_size, format_answer, sig->nr_threads);
+		const char format_answer[] = "Nr threads: %u\nNotify count: %u\nGroup stop count: %u\nThread head: %x\nLive: %u\n";
+		size_t string_size = snprintf(NULL, 0, format_answer, sig->nr_threads, sig->notify_count, sig->group_stop_count, &(sig->thread_head), sig->live.counter) + 1;
+		snprintf(fields_values_str, string_size, format_answer, sig->nr_threads. sig->notify_count, sig->group_stop_count, &(sig->thread_head), sig->live.counter);
 		copy_to_user(buff, fields_values_str, string_size);
 		read_status = string_size;
 	}
