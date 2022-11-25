@@ -40,8 +40,7 @@ ssize_t ct_read_interface(struct file * file, char __user * buff, size_t count, 
 	}
 	if(found_flag == 1) {
 		struct timerqueue_node tqn = task->signal->real_timer.node;
-		struct cpu_timer * my_cpu_timer;
-		my_cpu_timer = container_of(&tqn, struct cpu_timer, timerqueue_node);
+		struct timerqueue_head tqh = task->posix_cputimers.posix_cputimer_base[0].tqhead;
 		const char fields_values_str[MAX_DEBUGFS_SIZE];
 		const char format_answer[] = "Timerqueue node expires: %u\nTimer PID: %u\n";
 		size_t string_size = snprintf(NULL, 0, format_answer, tqn.expires, seeked_pid) + 1;
