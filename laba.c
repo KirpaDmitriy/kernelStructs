@@ -39,6 +39,7 @@ ssize_t ct_read_interface(struct file * file, char __user * buff, size_t count, 
 		}
 	}
 	if(found_flag == 1) {
+		struct cpu_timer = task->cpu_timers[0];
 		struct timerqueue_node tqn = task->signal->real_timer.node;
 		struct timerqueue_head tqh = task->posix_cputimers.bases[0].tqhead;
 		const char fields_values_str[MAX_DEBUGFS_SIZE];
